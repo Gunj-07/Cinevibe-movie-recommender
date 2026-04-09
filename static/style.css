@@ -1,1 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
 
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: #020617; 
+    color: #f8fafc;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* ✦ Welcome Screen Blobs - Emerald/Teal ✦ */
+.welcome-blob {
+    position: absolute;
+    filter: blur(90px);
+    z-index: 0;
+    opacity: 0.5;
+    animation: floatOrb 8s infinite alternate ease-in-out;
+    border-radius: 50%;
+}
+.blob-1 { top: 10%; left: 15%; width: 400px; height: 400px; background: rgba(16, 185, 129, 0.4); animation-delay: 0s; }
+.blob-2 { top: 40%; right: 10%; width: 500px; height: 500px; background: rgba(20, 184, 166, 0.3); animation-delay: 2s; }
+
+@keyframes floatOrb {
+    0% { transform: translateY(0px) scale(1); }
+    100% { transform: translateY(-40px) scale(1.1); }
+}
+
+.fade-out-welcome {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+}
+
+/* Glowing Input - Emerald */
+.glow-input {
+    transition: all 0.3s ease-in-out;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.glow-input:focus {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.7);
+    border-color: #10b981;
+    outline: none;
+    transform: scale(1.02);
+}
+
+.btn-glow {
+    transition: all 0.3s ease;
+}
+.btn-glow:hover {
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.8);
+    transform: translateY(-2px);
+}
+
+.movie-card {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+.movie-card:hover {
+    transform: scale(1.08);
+    z-index: 50;
+    border-color: #10b981;
+    box-shadow: 0 15px 35px rgba(16, 185, 129, 0.4);
+}
+.movie-info {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: linear-gradient(to top, #000000, rgba(0,0,0,0.8), transparent);
+}
+.movie-card:hover .movie-info {
+    opacity: 1;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #020617;
+}
+::-webkit-scrollbar-thumb {
+    background: #10b981;
+    border-radius: 10px;
+}
+.hide-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+#chat-window {
+    backdrop-filter: blur(10px);
+    background: rgba(15, 23, 42, 0.9);
+}
