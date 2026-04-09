@@ -1,1 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineVibe | Aesthetic AI Streaming ✦</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="overflow-x-hidden">
 
+    <!-- ✦ 1. WELCOME & ONBOARDING SCREEN ✦ -->
+    <div id="welcome-screen" class="fixed inset-0 z-[1000] bg-[#020617] flex flex-col items-center justify-center overflow-hidden">
+        <div class="welcome-blob blob-1"></div>
+        <div class="welcome-blob blob-2"></div>
+        
+        <div class="relative z-10 text-center px-6 max-w-xl flex flex-col items-center bg-[#0f172a]/80 p-10 rounded-3xl border border-emerald-500/30 backdrop-blur-md shadow-2xl">
+            <i class="ph-fill ph-play-circle text-emerald-500 text-6xl mb-4 drop-shadow-[0_0_20px_rgba(16,185,129,0.8)]"></i>
+            <h1 class="text-4xl font-black text-white mb-2">Welcome to CineVibe.</h1>
+            <p class="text-gray-400 text-sm mb-8">Personalize your ML-driven streaming experience.</p>
+            
+            <div class="w-full text-left space-y-4 mb-8">
+                <div>
+                    <label class="text-emerald-300 text-sm font-bold ml-1">What should we call you?</label>
+                    <input type="text" id="userNameInput" placeholder="Enter your name" class="w-full mt-1 bg-slate-800 text-white rounded-xl px-4 py-3 outline-none border border-slate-600 focus:border-emerald-500 transition">
+                </div>
+                <div>
+                    <label class="text-emerald-300 text-sm font-bold ml-1">What's your usual vibe?</label>
+                    <select id="userMoodInput" class="w-full mt-1 bg-slate-800 text-white rounded-xl px-4 py-3 outline-none border border-slate-600 focus:border-emerald-500 transition cursor-pointer">
+                        <option value="Happy">Happy / Comedy 💫</option>
+                        <option value="Thrilled">Thrilled / Action 🔥</option>
+                        <option value="Thoughtful">Thoughtful / Sci-Fi 🔮</option>
+                        <option value="Motivated">Motivated / Drama 🌊</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button onclick="enterSite()" class="w-full py-4 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl font-bold text-lg text-white shadow-[0_0_20px_rgba(16,185,129,0.5)] hover:scale-105 transition-all">
+                Enter CineVibe 🚀
+            </button>
+        </div>
+    </div>
+
+    <!-- ✦ 2. USER PROFILE SIDEBAR ✦ -->
+    <div id="profileSidebar" class="fixed top-0 right-0 w-80 h-full bg-[#0f172a]/95 backdrop-blur-xl border-l border-emerald-500/30 z-[200] transform translate-x-full transition-transform duration-300 shadow-2xl p-6 flex flex-col">
+        <div class="flex justify-between items-center mb-8 border-b border-slate-700 pb-4">
+            <h2 class="text-2xl font-black text-white flex items-center"><i class="ph-fill ph-user-circle text-emerald-500 mr-2"></i> Profile</h2>
+            <button onclick="toggleProfile()" class="text-gray-400 hover:text-red-400 text-2xl"><i class="ph ph-x"></i></button>
+        </div>
+        
+        <div class="flex flex-col items-center mb-8">
+            <img id="sidebarAvatar" src="" class="w-24 h-24 rounded-full border-4 border-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.5)] mb-3">
+            <h3 id="sidebarName" class="text-xl font-bold text-white">User Name</h3>
+            <p id="sidebarMood" class="text-emerald-400 text-sm font-semibold bg-emerald-900/30 px-3 py-1 rounded-full mt-2">Vibe: Happy</p>
+        </div>
+
+        <h4 class="text-lg font-bold text-gray-200 mb-4 border-b border-slate-700 pb-2"><i class="ph-fill ph-heart text-red-500 mr-1"></i> My Wishlist</h4>
+        <div id="wishlistContainer" class="flex-1 overflow-y-auto space-y-3 hide-scroll"></div>
+        
+        <div class="mt-4 space-y-3">
+            <button onclick="clearWishlist()" class="w-full py-2.5 bg-slate-800 text-gray-300 rounded-lg text-sm hover:bg-slate-700 transition font-semibold flex justify-center items-center">
+                <i class="ph-bold ph-trash mr-2"></i> Clear Wishlist
+            </button>
+            <button onclick="logout()" class="w-full py-2.5 bg-red-900/20 border border-red-500/30 text-red-400 rounded-lg text-sm hover:bg-red-600 hover:text-white transition font-semibold flex justify-center items-center">
+                <i class="ph-bold ph-sign-out mr-2"></i> Logout / Reset
+            </button>
+        </div>
+    </div>
+
+    <!-- ✦ 3. NAVBAR ✦ -->
+    <nav class="p-5 flex justify-between items-center fixed w-full z-50 transition-all duration-300 bg-transparent" id="navbar">
+        <div class="flex items-center space-x-10">
+            <h1 class="text-3xl font-black text-white tracking-widest flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                <i class="ph-fill ph-play-circle text-emerald-500 mr-2 text-4xl"></i> CINE<span class="text-emerald-500">VIBE</span>
+            </h1>
+            <ul class="hidden md:flex space-x-8 text-sm font-semibold text-gray-400 tracking-wide">
+                <li><a href="#personalizedRow" class="hover:text-emerald-400 transition flex items-center"><i class="ph-fill ph-sparkle mr-1"></i> For You</a></li>
+                <li><a href="#trending" class="hover:text-emerald-400 transition flex items-center"><i class="ph ph-trend-up mr-1"></i> Trending</a></li>
+            </ul>
+        </div>
+        <div class="flex items-center space-x-6 relative">
+            <i class="ph ph-magnifying-glass absolute left-3 text-gray-400"></i>
+            <input type="text" id="searchInput" onkeyup="searchMovie()" placeholder="Search movies..." class="glow-input rounded-full pl-10 pr-4 py-2 text-sm w-72 text-white placeholder-gray-400">
+            <img id="userAvatar" onclick="toggleProfile()" src="https://ui-avatars.com/api/?name=US&background=10b981&color=fff" class="w-10 h-10 rounded-full border-2 border-emerald-500 cursor-pointer shadow-[0_0_15px_rgba(16,185,129,0.5)] hover:scale-110 transition">
+        </div>
+    </nav>
+
+    <div id="searchResults" class="px-12 pt-32 pb-10 min-h-screen hidden relative z-20"></div>
+
+    <div id="mainSections">
+        <!-- ✦ 4. HERO SECTION ✦ -->
+        <div class="h-screen relative flex flex-col justify-center px-12 pt-20">
+            <div class="absolute inset-0 bg-[url('https://image.tmdb.org/t/p/original/rSPw7tgCH9c6NqICZef4kZjFOQ5.jpg')] bg-cover bg-center"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#020617] via-[#020617]/90 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent"></div>
+            <div class="relative z-10 max-w-2xl mt-10">
+                <span class="bg-emerald-600/20 border border-emerald-500 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full tracking-widest uppercase mb-4 inline-flex items-center">
+                    <i class="ph-fill ph-star mr-1"></i> Global #1
+                </span>
+                <h2 class="text-7xl font-black mb-4 leading-tight drop-shadow-2xl">The Godfather</h2>
+                <div class="flex space-x-4">
+                    <button onclick="openTrailer('https://www.youtube.com/embed/UaVTIH8mujA')" class="btn-glow bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-3 rounded-lg font-bold text-lg flex items-center">
+                        <i class="ph-fill ph-play mr-2 text-xl"></i> Trailer
+                    </button>
+                    <button onclick="addToWishlist('The Godfather', 'https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg')" class="btn-glow bg-white/10 hover:bg-white/20 px-4 py-3 rounded-lg font-bold text-lg text-white border border-white/20">
+                        <i class="ph-fill ph-heart"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ✦ 5. PERSONALIZED ROW ✦ -->
+        <div id="personalizedRow" class="px-12 -mt-10 relative z-20 mb-16 pt-10 hidden">
+            <h3 class="text-2xl font-bold mb-4 flex items-center text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500">
+                <i class="ph-fill ph-sparkle text-emerald-500 mr-2 text-3xl"></i> Recommended For You (Based on Profile)
+            </h3>
+            <div id="personalizedContainer" class="flex space-x-5 overflow-x-auto hide-scroll pb-8 pt-4"></div>
+        </div>
+
+        {% macro movie_row(title, movies_list, icon, section_id) %}
+        <div id="{{ section_id }}" class="px-12 relative z-20 mb-12">
+            <h3 class="text-2xl font-bold mb-4 flex items-center text-gray-100">
+                <i class="ph-fill {{ icon }} text-emerald-500 mr-2 text-3xl"></i> {{ title }}
+            </h3>
+            <div class="flex space-x-5 overflow-x-auto hide-scroll pb-8 pt-4">
+                {% for movie in movies_list %}
+                <div class="min-w-[220px] max-w-[220px] bg-slate-900 rounded-xl relative movie-card group">
+                    <img src="{{movie.poster}}" onerror="this.onerror=null; this.src='https://placehold.co/500x750/1e293b/10b981?text={{movie.title}}'" class="w-full h-80 object-cover rounded-xl shadow-[0_5px_15px_rgba(0,0,0,0.5)] cursor-pointer" onclick="openTrailer('{{movie.trailer}}')">
+                    <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-2 py-1 rounded-md text-xs text-yellow-400 font-bold border border-yellow-500/30">⭐ {{movie.rating}}</div>
+                    <button onclick="addToWishlist('{{movie.title}}', '{{movie.poster}}')" class="absolute top-3 left-3 bg-black/60 backdrop-blur-md p-2 rounded-full text-white hover:text-red-500 border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity z-30">
+                        <i class="ph-fill ph-heart text-xl"></i>
+                    </button>
+                    <div class="movie-info absolute bottom-0 left-0 right-0 p-5 rounded-b-xl pointer-events-none">
+                        <h4 class="font-bold text-lg text-white drop-shadow-lg">{{movie.title}}</h4>
+                        <p class="text-xs text-emerald-300 font-semibold mb-2 flex items-center"><i class="ph-fill ph-translate mr-1"></i> {{movie.language}}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endmacro %}
+
+        {{ movie_row('Trending Now', categories.trending, 'ph-fire', 'trending') }}
+        {{ movie_row('Blockbuster Bollywood', categories.bollywood, 'ph-film-strip', 'bollywood') }}
+        {{ movie_row('Action & Thrillers', categories.action, 'ph-sword', 'action') }}
+
+        <!-- ✦ 6. DYNAMIC ML SENTIMENT ENGINE ✦ -->
+        <div id="sentiment-engine" class="px-12 py-16 bg-slate-900/50 border-y border-emerald-900/30 relative z-20">
+            <div class="flex flex-col md:flex-row gap-10 max-w-6xl mx-auto">
+                <div class="md:w-1/2">
+                    <h3 class="text-3xl font-black mb-2 text-white flex items-center"><i class="ph-fill ph-brain text-emerald-500 mr-2"></i> CineMind Engine</h3>
+                    <p class="text-gray-400 mb-6 font-light">Write a review. Our ML model will analyze your emotional sentiment and mathematically adjust the movie's rating!</p>
+                    <select id="reviewMovie" class="w-full bg-slate-800 text-white rounded-lg px-4 py-3 mb-4 outline-none border border-slate-700 cursor-pointer focus:border-emerald-500 transition">
+                        {% for movie in categories.all %}
+                        <option value="{{ movie.title }}">{{ movie.title }}</option>
+                        {% endfor %}
+                    </select>
+                    <textarea id="reviewText" rows="4" placeholder="Write your honest review here..." class="w-full bg-slate-800 text-white rounded-lg px-4 py-3 outline-none border border-slate-700 focus:border-emerald-500 mb-4 transition"></textarea>
+                    <button onclick="submitReview()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 rounded-lg font-bold w-full transition flex justify-center items-center shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                        Analyze Sentiment <i class="ph-bold ph-arrow-right ml-2"></i>
+                    </button>
+                </div>
+                <div class="md:w-1/2 bg-[#0f172a] rounded-2xl p-8 border border-slate-700 shadow-2xl flex flex-col justify-center items-center text-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-emerald-900/20 to-transparent"></div>
+                    <div class="relative z-10 w-full">
+                        <h4 class="text-xl font-bold text-gray-300 mb-4" id="simulatedMovieName">{{ categories.all[0].title }}</h4>
+                        <div class="text-6xl font-black text-yellow-400 mb-2 transition-all duration-700" id="liveRating">4.5</div>
+                        <p class="text-sm text-gray-500 mb-6">Current AI Rating</p>
+                        <div class="bg-slate-800 w-full rounded-xl p-4 border border-slate-700">
+                            <p class="text-sm text-gray-400 mb-1">Sentiment Analysis Result:</p>
+                            <p class="text-xl font-bold text-gray-500" id="sentimentResult">Awaiting Review...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ✦ 7. AI MOOD RECOMMENDER ✦ -->
+        <div id="mood" class="px-12 py-16 bg-gradient-to-b from-[#020617] to-[#064e3b] relative border-t border-emerald-900/50 z-20">
+            <div class="max-w-4xl mx-auto text-center">
+                <h3 class="text-4xl font-black mb-4 flex justify-center items-center text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500">
+                    <i class="ph-fill ph-magic-wand text-emerald-400 mr-3"></i> AI Mood Matcher
+                </h3>
+                <div class="flex justify-center space-x-6 mb-10 flex-wrap gap-y-4">
+                    <button onclick="getMood('Happy')" class="btn-glow bg-slate-800/80 border border-slate-700 hover:border-emerald-500 px-6 py-3 rounded-full text-xl transition">💫 Joyful</button>
+                    <button onclick="getMood('Thoughtful')" class="btn-glow bg-slate-800/80 border border-slate-700 hover:border-emerald-500 px-6 py-3 rounded-full text-xl transition">🔮 Deep</button>
+                    <button onclick="getMood('Thrilled')" class="btn-glow bg-slate-800/80 border border-slate-700 hover:border-emerald-500 px-6 py-3 rounded-full text-xl transition">🔥 Adrenaline</button>
+                    <button onclick="getMood('Motivated')" class="btn-glow bg-slate-800/80 border border-slate-700 hover:border-emerald-500 px-6 py-3 rounded-full text-xl transition">🌊 Inspired</button>
+                </div>
+                <div id="moodResults" class="flex justify-center space-x-6 overflow-x-auto hide-scroll pb-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✦ 8. TRAILER MODAL ✦ -->
+    <div id="trailerModal" class="fixed inset-0 bg-black/95 backdrop-blur-sm z-[100] hidden flex-col justify-center items-center">
+        <button onclick="closeTrailer()" class="absolute top-8 right-12 text-gray-400 hover:text-red-500 text-5xl transition"><i class="ph ph-x-circle"></i></button>
+        <iframe id="trailerFrame" class="w-3/4 h-3/4 rounded-xl shadow-2xl" src="" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <!-- ✦ 9. FLOATING AI CHATBOT ✦ -->
+    <div class="fixed bottom-8 right-8 z-[150] flex flex-col items-end">
+        <div id="chat-window" class="hidden flex-col w-80 mb-4 rounded-2xl shadow-[0_0_30px_rgba(16,185,129,0.2)] overflow-hidden transition-all border border-emerald-500/30">
+            <div class="bg-gradient-to-r from-emerald-700 to-teal-600 p-4 font-bold text-white flex justify-between items-center">
+                <span class="flex items-center"><i class="ph-fill ph-robot mr-2 text-2xl"></i> VibeMind AI</span>
+                <button onclick="toggleChat()" class="text-white/80 hover:text-white"><i class="ph ph-x text-xl"></i></button>
+            </div>
+            <div id="chat-messages" class="p-4 h-72 overflow-y-auto font-light text-sm bg-[#0f172a]">
+                <div class="flex justify-start mb-3">
+                    <div class="bg-slate-700 text-emerald-100 p-3 rounded-xl rounded-bl-none border border-slate-600">
+                        <span class="text-emerald-400 mr-1 text-lg">✧</span> Hi! Tell me a plot, and I'll find your next watch.
+                    </div>
+                </div>
+            </div>
+            <div class="p-3 bg-slate-900 flex border-t border-slate-700">
+                <input type="text" id="chatInput" onkeypress="handleChatEnter(event)" placeholder="E.g., Space mission..." class="flex-1 bg-slate-800 text-white rounded-l-lg px-3 py-2 text-sm focus:ring-1 focus:ring-emerald-500 outline-none">
+                <button onclick="sendMessage()" class="bg-emerald-600 px-4 rounded-r-lg hover:bg-emerald-500 transition">
+                    <i class="ph-fill ph-paper-plane-right text-white"></i>
+                </button>
+            </div>
+        </div>
+        <button onclick="toggleChat()" class="bg-gradient-to-r from-emerald-600 to-teal-600 p-4 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.6)] hover:scale-110 transition duration-300 flex items-center justify-center text-white text-3xl">
+            <i class="ph-fill ph-chat-teardrop-dots"></i>
+        </button>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
